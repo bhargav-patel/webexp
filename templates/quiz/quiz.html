@@ -21,7 +21,7 @@
 			<h2 class=" text-center">Level 1</h2>
 			<br />
 			<div class="row">
-				<img class="col-md-6 img-responsive" src="{% static 'img/1.jpg'%}" />
+				<img class="col-md-6 img-responsive"  data-toggle="modal" data-target="#fullImage" src="{% static 'img/1.jpg'%}" />
 				<p class="col-md-6 lead">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.?????Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.?????</p>
 			</div>
 			<br />
@@ -39,6 +39,19 @@
 						</div>
 					</div>
 				</form>
+			</div>
+			<div class="modal fade" id="fullImage">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title">Level 1 Image</h4>
+						</div>
+						<div class="modal-body">
+							<img class="img-responsive" src="{% static 'img/1.jpg'%}" />
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
