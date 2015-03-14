@@ -1,0 +1,7 @@
+{% load fieldtype %}
+<div class="form-group {% if field.errors %}has-warning{% endif %}">
+	<label for="{{ field.id_for_label }}" class="col-lg-3 control-label">{{field.label}}</label>
+	<div class="col-lg-9">
+		<input type="{{ field | fieldtype }}" value="{% if not field.errors %}{{field.value|default:''}}{%endif%}" class="form-control" placeholder="{% if field.errors %}{{field.errors.0}}{%else%}{{field.help_text|default:field.label}}{% endif %}" name="{{field.name}}">
+	</div>
+</div>
