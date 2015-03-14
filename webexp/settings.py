@@ -94,6 +94,8 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
+LOGIN_URL = '/auth/login/'
+
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )

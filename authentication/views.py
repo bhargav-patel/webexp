@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
 from authentication.forms import UserForm,ProfileForm,LoginForm
 from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -24,6 +25,7 @@ def register(request):
 	
 def login_view(request):
 	error=None
+	next = request.GET.get('next',None)
 	if request.user.is_authenticated():
 		return redirect('/admin/')
 	if request.POST:
@@ -35,6 +37,9 @@ def login_view(request):
 			
 			if user is not None:
 				login(request,user)
+				if request.GET.get('next') is not None:
+					print('here')
+					return redirect(request.GET["next"])
 				return redirect(reverse('register'))
 		
 		error='Invalid credentials.'
@@ -42,4 +47,11 @@ def login_view(request):
 	else:
 		form = LoginForm()
 		
-	return render(request,'auth/login.html',{'form':form,'error':error})
+	
+		
+	return render(request,'auth/login.html',{'form':form,'error':error,'next':next})
+	
+@login_required	
+def logout_view(request):
+	logout(request)
+	return redirect(reverse('login'))

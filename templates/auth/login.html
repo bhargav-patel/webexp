@@ -6,7 +6,7 @@
 			{% include 'auth/error.html'%}
 		{% endif %}
 		<div class="well bs-component">
-			<form action={% url 'login' %} method="post" class="form-horizontal">
+			<form action="{% url 'login' %}{% if next %}?next={{next}}{%endif%}" method="post" class="form-horizontal">
 				{% csrf_token %}
 				<fieldset>
 					<legend>LogIn</legend>
