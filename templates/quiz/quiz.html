@@ -1,4 +1,72 @@
 {% extends "base.html" %}
+{%load staticfiles%}
 {% block content %}
-<p style="color:white">Quiz</p>
+<div class="row">
+	<div class="col-md-2">
+		<div class="well bs-component text-center">
+			<h2 class="text-center"><div class="mdi-maps-local-gas-station"></div>Lifeline</h2><br />
+			<button type="button" style="display:block;width:100%;" class="btn btn-success btn-lg btn-raised">
+				<div class="mdi-av-fast-forward"></div>Skip This
+			</button>
+			<button type="button" style="display:block;width:100%;" class="btn btn-info btn-lg btn-raised">
+				<div class="mdi-image-wb-sunny"></div>Hint
+			</button>
+			<button type="button" style="display:block;width:100%;" class="btn btn-warning btn-lg btn-raised">
+				<div class="mdi-content-link"></div>Get Link
+			</button>
+		</div>
+	</div>
+	<div class="col-md-7">
+		<div class="well bs-component">
+			<h2 class=" text-center">Level 1</h2>
+			<br />
+			<div class="row">
+				<img class="col-md-6 img-responsive" src="{% static 'img/1.jpg'%}" />
+				<p class="col-md-6 lead">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.?????Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.?????</p>
+			</div>
+			<br />
+			<h1></h1>
+			<br />
+			<div class="row">
+				<form class="form-horizontal">
+					<div class="form-group" style="font-size:20px;">
+						<label class="col-xs-2 control-label">Answer</label>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" placeholder="Enter your answer Here.">
+						</div>
+						<div class="col-xs-1">
+							<button type="submit" class="btn btn-primary mdi-content-send"></button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="well bs-component">
+			<h2 class=" text-center">LeaderBoard</h2><br />
+			<table class="table table-striped table-hover ">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Username</th>
+						<th>Level</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>Column content</td>
+						<td>Column content</td>
+					</tr>
+					<tr class="success">
+						<td>2</td>
+						<td>Column content</td>
+						<td>Column content</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
 {% endblock %}
