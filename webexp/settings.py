@@ -10,6 +10,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from datetime import datetime,timedelta
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -101,3 +103,6 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
 
+QUIZ_TIME = datetime(2015,3,14,18,54,0,0)
+td = timedelta(hours=5,minutes=30)
+QUIZ_TIME = QUIZ_TIME - td;

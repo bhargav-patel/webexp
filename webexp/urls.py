@@ -8,5 +8,5 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
 	url(r'^auth/', include('authentication.urls')),
-	url(r'^$', include('quiz.urls')),
+	url(r'^', include('quiz.urls')),
 )

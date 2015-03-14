@@ -1,4 +1,57 @@
 {% extends "base.html" %}
 {% block content %}
-	CountDown
+<div class="jumbotron text-center">
+    <h1 id="clock" class="mdi-action-schedule"></h1>
+	<h1 id="countdown"></h1><br />
+    <p>Keep Calm and Read Rules below.You will be redirected when event starts.</p>
+</div>
+<div class="row">
+	<div class="col-lg-10 col-lg-offset-1">
+		<div class="well bs-component">
+			<h2 class=" text-center">Rules</h2><br />
+			<ol>
+				<li>rule 1</li>
+				<li>rule 2</li>
+				<li>rule 1</li>
+				<li>rule 2</li>
+			<ol>
+		</div>
+	</div>
+</div>
 {% endblock %}
+{% load static %}
+{% block js%}
+<script src="{% static 'bower_components/jquery.countdown/dist/jquery.countdown.js' %}"></script>
+<script type="text/javascript">
+function to2(a)
+{
+	if(a<10){
+		return '0'+a;
+	}
+	return a;
+}
+function dateToStr(d)
+{
+	var dt = d.getDate(),
+		mn = d.getMonth()+1,
+		y = d.getFullYear(),
+		h = d.getHours(),
+		m = d.getMinutes(),
+		s = d.getSeconds();
+		
+		dateStr = y+"/"+to2(mn)+"/"+to2(dt)+" "+to2(h)+":"+to2(m)+":"+to2(s)
+		
+		return dateStr;
+}
+var n = new Date();
+var ds = dateToStr(new Date(n.getTime()+( {{tds}} *1000)));
+console.log(ds);
+$("#countdown").countdown(ds,function(event) {
+	$(this).text(
+		event.strftime('%H : %M : %S')
+	).on('finish.countdown', function(){
+		location.href = '{% url 'quiz'%}';
+	});
+});
+ </script>
+{%endblock%}
