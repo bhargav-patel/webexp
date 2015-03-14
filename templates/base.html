@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+	<title>Web Expadition</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{% block css%}
+		<link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css'%}">
+		<link rel="stylesheet" href="{% static 'bower_components/bootstrap-material-design/dist/css/ripples.min.css'%}">
+		<link rel="stylesheet" href="{% static 'bower_components/bootstrap-material-design/dist/css/material-fullpalette.min.css'%}">
+	{% endblock %}
+</head>
+<body>
+{% include "nav.html" %}
+
+<div class="container-fluid">
+{% block content %}{% endblock %}
+</div>
+
+{% block js%}
+	<script src="{% static 'bower_components/jquery/dist/jquery.min.js'%}"></script>
+	<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js'%}"></script>
+	<script src="{% static 'bower_components/bootstrap-material-design/dist/js/ripples.min.js'%}"></script>
+	<script src="{% static 'bower_components/bootstrap-material-design/dist/js/material.min.js'%}"></script>
+	<script>
+      $.material.init();
+    </script>
+{% endblock %}
+</body>
+</html>

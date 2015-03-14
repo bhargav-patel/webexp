@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load fieldtype %}
+{% block content %}
+<div class="row">
+	<div class="col-lg-6 col-lg-offset-3">
+		{% for error in userform.non_field_errors %}
+			<div class="alert alert-dismissable alert-warning">
+				<button type="button" class="close" data-dismiss="alert">×</button>
+				<p>{{error}}</p>
+			</div>
+		{% endfor %}
+		{% for error in userprofileform.non_field_errors %}
+			<div class="alert alert-dismissable alert-warning">
+				<button type="button" class="close" data-dismiss="alert">×</button>
+				<p>{{error}}</p>
+			</div>
+		{% endfor %}
+		
+		<div class="well bs-component">
+			<form action={% url 'register' %} method="post" class="form-horizontal">
+				{% csrf_token %}
+				
+				<fieldset>
+					<legend>Register</legend>
+					{% for field in userform %}
+						<div class="form-group {% if field.errors %}has-warning{% endif %}">
+							<label for="{{ field.id_for_label }}" class="col-lg-3 control-label">{{field.label}}</label>
+							<div class="col-lg-9">
+								<input type="{{ field | fieldtype }}" value="{{field.value|default:''}}" class="form-control" placeholder="{{field.help_text|default:field.label}}" name="{{field.name}}">
+								<span class="help-block">{{ field.errors.0 }}</span>
+							</div>
+						</div>
+					{% endfor %}
+					{% for field in userprofileform %}
+						<div class="form-group {% if field.errors %}has-warning{% endif %}">
+							<label for="{{ field.id_for_label }}" class="col-lg-3 control-label">{{field.label}}</label>
+							<div class="col-lg-9">
+								<input type="{{ field | fieldtype }}" value="{{field.value|default:''}}" class="form-control" placeholder="{{field.help_text|default:field.label}}" name="{{field.name}}">
+								<span class="help-block">{{ field.errors.0 }}</span>
+							</div>
+						</div>
+					{% endfor %}
+					<div class="form-group">
+						<div class="col-lg-10 col-lg-offset-3">
+							<button class="btn btn-default">Cancel</button>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
