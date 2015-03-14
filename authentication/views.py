@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 def register(request):
 	if request.user.is_authenticated():
-		return redirect('/admin/')
+		return redirect(reverse('waiting'))
 	if request.POST:
 		userform = UserForm(request.POST)
 		userprofileform = ProfileForm(request.POST)
@@ -17,7 +17,7 @@ def register(request):
 			userprofile = userprofileform.save(commit=False)
 			userprofile.user = user
 			userprofile.save()
-			return redirect('/admin/')
+			return redirect(reverse('login'))
 	else:
 		userform = UserForm()
 		userprofileform = ProfileForm()
@@ -27,7 +27,7 @@ def login_view(request):
 	error=None
 	next = request.GET.get('next',None)
 	if request.user.is_authenticated():
-		return redirect('/admin/')
+		return redirect(reverse('waiting'))
 	if request.POST:
 		form = LoginForm(request.POST)
 		if form.is_valid():
@@ -40,7 +40,7 @@ def login_view(request):
 				if request.GET.get('next') is not None:
 					print('here')
 					return redirect(request.GET["next"])
-				return redirect(reverse('register'))
+				return redirect(reverse('waiting'))
 		
 		error='Invalid credentials.'
 		
