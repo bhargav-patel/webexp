@@ -14,9 +14,10 @@
 	  <ul class="nav navbar-nav navbar-right">
 		{% if user.is_authenticated %}
 			<li><a href="#">Hello {{user.username}}</a></li>
+			<li><a href="{% url 'logout' %}">Logout</a></li>
 		{% else %}
-			<li><a href="#">LogIn</a><div class="ripple-wrapper"></div></li>
-			<li><a href="#">Register</a></li>
+			<li><a href="{% url 'login' %}">LogIn</a></li>
+			<li><a href="{% url 'register' %}">Register</a></li>
 		{% endif %}
 	  </ul>
 	</div><!-- /.navbar-collapse -->
