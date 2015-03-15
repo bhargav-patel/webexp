@@ -1,5 +1,18 @@
 angular.module('quiz', [])
 	.controller('mainController', ['$scope','$http', function($scope,$http) {
+		function getsbc(){
+			return 
+		}
+		var options =  {
+			content: 'initial',
+			style: "snackbar",
+			timeout: 2000 ,
+			htmlAllowed: true 
+		}
+		function showSB(text,type){
+			options.content='<div class="panel panel-'+type+'"><div class="panel-heading"><h3 class="panel-title">'+text+'</h3></div></div>'
+			$.snackbar(options);
+		}
 		$scope.getQuestion = function(){
 			$scope.loading = true;
 			$http.post('/quiz/getquestion')
@@ -15,7 +28,16 @@ angular.module('quiz', [])
 					if(data.status=="true")
 					{
 						$scope.answer="";
+						showSB('GoodJob','success');
 						$scope.getQuestion();
+					}
+					else if(data.status=="false")
+					{
+						showSB('Wrong Answer. Try Again.','warning');
+					}
+					else
+					{
+						showSB('Cehcking...','info');
 					}
 					$scope.loading = false;
 				});
