@@ -7,10 +7,13 @@ class Profile(models.Model):
 	user = models.OneToOneField(User)
 	mobile = models.CharField(max_length=10)
 	level = models.IntegerField(default=1)
+	points = models.IntegerField(default=0)
 	lifeline1 = models.BooleanField(default=False)
 	lifeline2 = models.BooleanField(default=False)
 	lifeline3 = models.BooleanField(default=False)
 	
 	def __str__(self):
 		return self.user.username+" "+str(self.level)
-	
+		
+	def get_top_10(self):
+		return Profile.objects.order_by('points')[:10]

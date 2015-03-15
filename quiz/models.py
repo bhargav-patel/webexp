@@ -10,6 +10,7 @@ class Question(models.Model):
 	options = models.CharField(max_length=50,blank=False,null=False)
 	hint = models.CharField(max_length=50,blank=False,null=False)
 	link = models.URLField(blank=False,null=False)
+	points = models.IntegerField()
 	
 	def __str__(self):
 		return str(self.level)+" "+ self.answer

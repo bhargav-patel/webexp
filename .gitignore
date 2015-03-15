@@ -68,3 +68,5 @@ dist/
 
 # Staticfiles
 staticfiles/
+
+static/img/que/

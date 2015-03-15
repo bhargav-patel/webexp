@@ -57,6 +57,7 @@ angular.module('quiz', [])
 					$scope.que = data;
 					$scope.llHint="";
 					$scope.llLink="";
+					$scope.lbUpdate();
 					$scope.loading = false;
 				});
 		}
@@ -78,6 +79,14 @@ angular.module('quiz', [])
 					{
 						showSB('Error : Contact Coordinatior.','danger');
 					}
+					$scope.loading = false;
+				});
+		}
+		$scope.lbUpdate = function(){
+			$scope.loading = true;
+			$http.post('/quiz/gettop')
+				.success(function(data){
+					$scope.lbData = data;
 					$scope.loading = false;
 				});
 		}

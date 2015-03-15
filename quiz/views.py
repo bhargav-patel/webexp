@@ -63,7 +63,8 @@ def checkanswer(request):
 		if json_data.get('level')==profile.level:
 			q = Question.objects.get(level=profile.level)
 			if json_data.get('answer')==q.answer:
-				profile.level = profile.level + 1;
+				profile.level = profile.level + 1
+				profile.points = profile.points + q.points
 				profile.save()
 				temp['status']='true'
 			else:
@@ -103,6 +104,19 @@ def uselifeline(request):
 		else:
 			temp['status']='fail'
 			
+		data = json.dumps(temp)
+		return HttpResponse(data,content_type='application/json')
+	raise Http404
+	
+def gettop(request):
+	if request.user.is_authenticated():
+		top = Profile.objects.order_by('-points')[:10]
+		temp=[]
+		for t in top:
+			temp.append({"u":t.user.username,"l":t.level,"p":t.points})
+		t = Profile.objects.get(user=request.user)
+		temp.append({"u":t.user.username,"l":t.level,"p":t.points})
+		
 		data = json.dumps(temp)
 		return HttpResponse(data,content_type='application/json')
 	raise Http404

@@ -6,5 +6,6 @@ urlpatterns = patterns('',
 	url(r'getquestion$', 'quiz.views.getquestion'),
 	url(r'checkanswer$', 'quiz.views.checkanswer'),
 	url(r'uselifeline$', 'quiz.views.uselifeline'),
+	url(r'gettop$', 'quiz.views.gettop'),
 	url(r'$', 'quiz.views.quiz',name='quiz'),
 )
