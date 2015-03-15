@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {%load staticfiles%}
 {% block content %}
-<div class="row">
+<div class="row" ng-app="quiz" ng-controller="mainController">
 	<div class="col-md-2">
 		<div class="well bs-component text-center">
 			<h2 class="text-center"><div class="mdi-maps-local-gas-station"></div>Lifeline</h2><br />
@@ -18,11 +18,11 @@
 	</div>
 	<div class="col-md-7">
 		<div class="well bs-component">
-			<h2 class=" text-center">Level 1</h2>
+			<h2 class=" text-center">Level <span ng-bind="que.level">1</span></h2>
 			<br />
 			<div class="row">
-				<img class="col-md-6 img-responsive"  data-toggle="modal" data-target="#fullImage" src="{% static 'img/1.jpg'%}" />
-				<p class="col-md-6 lead">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.?????Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.?????</p>
+				<img ng-src="{$que.image$}" class="col-md-6 img-responsive"  data-toggle="modal" data-target="#fullImage" />
+				<p class="col-md-6 lead" ng-bind="que.question">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.?????Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.?????</p>
 			</div>
 			<br />
 			<h1></h1>
@@ -48,7 +48,7 @@
 							<h4 class="modal-title">Level 1 Image</h4>
 						</div>
 						<div class="modal-body">
-							<img class="img-responsive" src="{% static 'img/1.jpg'%}" />
+							<img ng-src="{$que.image$}" class="img-responsive" src="{% static 'img/1.jpg'%}" />
 						</div>
 					</div>
 				</div>
@@ -64,6 +64,7 @@
 						<th>#</th>
 						<th>Username</th>
 						<th>Level</th>
+						<th>Points</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -71,9 +72,11 @@
 						<td>1</td>
 						<td>Column content</td>
 						<td>Column content</td>
+						<td>Column content</td>
 					</tr>
 					<tr class="success">
 						<td>2</td>
+						<td>Column content</td>
 						<td>Column content</td>
 						<td>Column content</td>
 					</tr>
@@ -82,4 +85,8 @@
 		</div>
 	</div>
 </div>
+{% endblock %}
+{% block js %}
+	<script src="{% static 'bower_components/angular/angular.min.js' %}"></script>
+	<script src="{% static 'js/quiz.js' %}"></script>
 {% endblock %}
