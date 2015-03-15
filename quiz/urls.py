@@ -5,5 +5,6 @@ urlpatterns = patterns('',
 	url(r'ended$', 'quiz.views.ended',name='ended'),
 	url(r'getquestion$', 'quiz.views.getquestion'),
 	url(r'checkanswer$', 'quiz.views.checkanswer'),
+	url(r'uselifeline$', 'quiz.views.uselifeline'),
 	url(r'$', 'quiz.views.quiz',name='quiz'),
 )

@@ -72,3 +72,37 @@ def checkanswer(request):
 		data = json.dumps(temp)
 		return HttpResponse(data,content_type='application/json')
 	raise Http404
+	
+def uselifeline(request):
+	if request.method == 'POST' and request.user.is_authenticated():
+		temp = {
+			'status':'error'
+		}
+		json_data = json.loads(request.body)
+		type = json_data.get('type')
+		level = json_data.get('level')
+		temp['type']=type
+		
+		profile = Profile.objects.get(user=request.user)
+		
+		if type==1 and profile.lifeline1==False:
+			profile.lifeline1=True
+			profile.level = profile.level + 1;
+			profile.save()
+			temp['status']='success'
+		elif type==2 and profile.lifeline2==False:
+			profile.lifeline2=True
+			profile.save()
+			temp['hint']=Question.objects.get(level=level).hint
+			temp['status']='success'
+		elif type==3 and profile.lifeline3==False:
+			profile.lifeline3=True
+			profile.save()
+			temp['link']=Question.objects.get(level=level).link
+			temp['status']='success'
+		else:
+			temp['status']='fail'
+			
+		data = json.dumps(temp)
+		return HttpResponse(data,content_type='application/json')
+	raise Http404
