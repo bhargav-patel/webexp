@@ -27,19 +27,22 @@
 			<br />
 			<h1></h1>
 			<br />
-			<div class="row">
 				<form class="form-horizontal" ng-submit="answer && checkAnswer()">
 					<div class="form-group" style="font-size:20px;">
-						<label class="col-xs-2 control-label">Answer</label>
-						<div class="col-xs-6">
-							<input type="text" class="form-control" placeholder="Enter your answer Here." ng-model="answer">
-						</div>
-						<div class="col-xs-1">
-							<button type="submit" class="btn btn-primary mdi-content-send"></button>
+						<div class="row">
+							<label class="col-xs-2 control-label">Answer</label>
+							<div class="col-xs-6">
+								<input type="text" class="form-control" placeholder="Enter your answer Here." ng-model="answer">
+							</div>
+							<div class="col-xs-1">
+								<button type="submit" class="btn btn-primary mdi-content-send"></button>
+							</div>
+							<div class="col-xs-1 col-xs-offset-1">
+								<img ng-show="loading" src="{% static 'img/load.gif' %}">
+							</div>
 						</div>
 					</div>
 				</form>
-			</div>
 			<div class="modal fade" id="fullImage">
 				<div class="modal-dialog">
 					<div class="modal-content">
