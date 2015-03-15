@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {%load staticfiles%}
 {% block content %}
-<div class="row" ng-app="quiz" ng-controller="mainController">
+<div class="row" ng-app="quiz" ng-controller="mainController" ng-init="getQuestion()">
 	<div class="col-md-2">
 		<div class="well bs-component text-center">
 			<h2 class="text-center"><div class="mdi-maps-local-gas-station"></div>Lifeline</h2><br />
@@ -28,11 +28,11 @@
 			<h1></h1>
 			<br />
 			<div class="row">
-				<form class="form-horizontal">
+				<form class="form-horizontal" ng-submit="answer && checkAnswer()">
 					<div class="form-group" style="font-size:20px;">
 						<label class="col-xs-2 control-label">Answer</label>
 						<div class="col-xs-6">
-							<input type="text" class="form-control" placeholder="Enter your answer Here.">
+							<input type="text" class="form-control" placeholder="Enter your answer Here." ng-model="answer">
 						</div>
 						<div class="col-xs-1">
 							<button type="submit" class="btn btn-primary mdi-content-send"></button>
