@@ -11,3 +11,6 @@ class Profile(models.Model):
 	lifeline2 = models.BooleanField(default=False)
 	lifeline3 = models.BooleanField(default=False)
 	
+	def __str__(self):
+		return self.user.username+" "+str(self.level)
+	

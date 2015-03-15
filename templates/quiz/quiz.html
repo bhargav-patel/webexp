@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 {%load staticfiles%}
-{% block content %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/snackbar.min.css'%}">
 {% endblock %}
+{% block content %}
 <div class="row" ng-app="quiz" ng-controller="mainController" ng-init="getQuestion()">
 	<div class="col-md-2">
+		<div class="panel panel-primary">
+			<div class="panel-heading text-center">
+				<h3><div class="mdi-action-alarm"></div></h3>
+				<h2 id="countdown"></h2>
+			</div>
+		</div>
 		<div class="panel panel-primary">
 			<div class="panel-heading">
 				<h2 class="text-center"><div class="mdi-maps-local-gas-station"></div>Lifeline</h2><br />
@@ -109,4 +115,5 @@
 	<script src="{% static 'bower_components/angular/angular.min.js' %}"></script>
 	<script src="{% static 'js/quiz.js' %}"></script>
 	<script src="{% static 'js/snackbar.min.js' %}"></script>
+	{% include 'quiz/countdown.html'%}
 {% endblock %}

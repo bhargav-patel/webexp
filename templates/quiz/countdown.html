@@ -1,0 +1,34 @@
+{% load staticfiles %}
+<script src="{% static 'bower_components/jquery.countdown/dist/jquery.countdown.js' %}"></script>
+<script>
+function to2(a)
+{
+	if(a<10){
+		return '0'+a;
+	}
+	return a;
+}
+function dateToStr(d)
+{
+	var dt = d.getDate(),
+		mn = d.getMonth()+1,
+		y = d.getFullYear(),
+		h = d.getHours(),
+		m = d.getMinutes(),
+		s = d.getSeconds();
+		
+		dateStr = y+"/"+to2(mn)+"/"+to2(dt)+" "+to2(h)+":"+to2(m)+":"+to2(s)
+		
+		return dateStr;
+}
+var n = new Date();
+var ds = dateToStr(new Date(n.getTime()+( {{tds}} *1000)));
+console.log(ds);
+$("#countdown").countdown(ds,function(event) {
+	$(this).text(
+		event.strftime('{{format}}')
+	).on('finish.countdown', function(){
+		location.href = '{% url 'quiz'%}';
+	});
+});
+</script>

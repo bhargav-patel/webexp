@@ -15,8 +15,7 @@ from authentication.models import Profile
 def waiting(request):
 	if settings.QUIZ_TIME > datetime.now():
 		td = settings.QUIZ_TIME - datetime.now()
-		print(td.seconds)
-		return render(request,'quiz/waiting.html',{'tds':td.seconds})
+		return render(request,'quiz/waiting.html',{'tds':td.seconds,'format':'%H : %M : %S'})
 	else:
 		return redirect(reverse('quiz'))
 		
@@ -24,8 +23,20 @@ def waiting(request):
 def quiz(request):
 	if settings.QUIZ_TIME > datetime.now():
 		return redirect(reverse('waiting'))
+	elif settings.QUIZ_END_TIME > datetime.now():
+		td = settings.QUIZ_END_TIME - datetime.now()
+		return render(request,'quiz/quiz.html',{'tds':td.seconds,'format':'%H : %M : %S'})
 	else:
-		return render(request,'quiz/quiz.html')
+		return render(request,'quiz/ended.html')
+		
+@login_required	
+def ended(request):
+	if settings.QUIZ_TIME > datetime.now():
+		return redirect(reverse('waiting'))
+	elif settings.QUIZ_END_TIME > datetime.now():
+		return redirect(reverse('quiz'))
+	else:
+		raise Http404
 		
 def getquestion(request):
 	if request.user.is_authenticated():

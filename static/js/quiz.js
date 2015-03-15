@@ -37,7 +37,7 @@ angular.module('quiz', [])
 					}
 					else
 					{
-						showSB('Cehcking...','info');
+						showSB('Error : Contact Coordinatior.','danger');
 					}
 					$scope.loading = false;
 				});
