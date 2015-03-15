@@ -1,7 +1,7 @@
 ﻿{% extends "base.html" %}
 {% block content %}
 <div class="row">
-	<div class="col-lg-5 col-lg-offset-4">
+	<div class="col-md-5 col-md-offset-4">
 		{% for error in userform.non_field_errors %}
 			{% include 'auth/error.html'%}
 		{% endfor %}
@@ -22,9 +22,11 @@
 					{% endfor %}
 					<br />
 					<div class="form-group">
-						<div class="col-lg-8 col-lg-offset-6">
-							<a class="btn btn-default" href="{%url 'register'%}">Reset</a>
-							<button type="submit" class="btn btn-primary">Register</button>
+						<div class="row">
+							<div class="col-md-8 col-md-offset-6">
+								<a class="btn btn-default" href="{%url 'register'%}">Reset</a>
+								<button type="submit" class="btn btn-primary">Register</button>
+							</div>
 						</div>
 					</div>
 				</fieldset>

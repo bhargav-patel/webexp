@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="row">
-	<div class="col-lg-5 col-lg-offset-4">
+	<div class="col-md-5 col-md-offset-4">
 		{% if error %}
 			{% include 'auth/error.html'%}
 		{% endif %}
@@ -16,9 +16,11 @@
 					{% endfor %}
 					<br />
 					<div class="form-group">
-						<div class="col-lg-8 col-lg-offset-6">
-							<a class="btn btn-default" href="{%url 'login'%}">Reset</a>
-							<button type="submit" class="btn btn-primary">LogIn</button>
+						<div class="row">
+							<div class="col-md-8 col-md-offset-4">
+								<a class="btn btn-default" href="{%url 'login'%}">Reset</a>
+								<button type="submit" class="btn btn-primary">LogIn</button>
+							</div>
 						</div>
 					</div>
 				</fieldset>

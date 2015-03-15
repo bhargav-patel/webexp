@@ -52,7 +52,6 @@ def getquestion(request):
 	raise Http404
 		
 def checkanswer(request):
-	print(request.is_ajax())
 	if request.method == 'POST' and request.user.is_authenticated():
 		temp = {
 			'status':'error'
