@@ -13,7 +13,7 @@ angular.module('quiz', [])
 				.success(function(data){
 					if(data.status=="true")
 					{
-						alert('true');
+						$scope.answer="";
 						$scope.getQuestion();
 					}
 				});
