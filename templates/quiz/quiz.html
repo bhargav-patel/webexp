@@ -41,8 +41,8 @@
 					<img ng-src="{$que.image$}" class="col-md-4 img-responsive" data-toggle="modal" data-target="#fullImage" />
 					<div class="col-md-8">
 						<p class="lead" ng-bind="que.question">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.?????Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.?????</p>
-						<p ng-show="llHint" class="text-info lead">Hint : {$llHint$}</p>
-						<p ng-show="llLink" class="text-warning lead">Link : <a class="text-warning lead" href="{$llLink$}" target="_blank">Click</a></p>
+						<a ng-show="llHint" class="btn btn-info btn-xs" data-toggle="modal" data-target="#hint">Hint</a>
+						<a ng-show="llLink" class="btn btn-warning btn-xs" href="{$llLink$}" target="_blank">Link</a>
 					</div>
 				</div>
 				<br />
@@ -88,6 +88,19 @@
 								<h4>{$llDesc$}</h4><br />
 								<button ng-click="useLifeline()" data-dismiss="modal" class="btn btn-success btn-raised">Confirm</button>
 								<button data-dismiss="modal" class="btn btn-warning btn-raised">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="hint">
+					<div class="modal-dialog btn-raised">
+						<div class="panel panel-success">
+							<div class="panel-heading text-center">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+								<h3>Hint</h3>
+							</div>
+							<div class="panel-body text-center">
+								<h4>{$llHint$}</h4>
 							</div>
 						</div>
 					</div>
