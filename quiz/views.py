@@ -86,11 +86,13 @@ def uselifeline(request):
 			temp['status']='success'
 		elif type==2 and profile.lifeline2==False:
 			profile.lifeline2=True
+			profile.points = profile.points-5
 			profile.save()
 			temp['hint']=Question.objects.get(level=level).hint
 			temp['status']='success'
 		elif type==3 and profile.lifeline3==False:
 			profile.lifeline3=True
+			profile.points = profile.points-5
 			profile.save()
 			temp['link']=Question.objects.get(level=level).link
 			temp['status']='success'

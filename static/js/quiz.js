@@ -13,11 +13,11 @@ angular.module('quiz', [])
 		$scope.setLifeline = function(type){
 			$scope.llType = type;
 			if(type==1)
-				$scope.llDesc = 'This will skip this question.';
+				$scope.llDesc = 'This will skip this question. You will not get points for this level.';
 			else if(type==2)
-				$scope.llDesc = 'This will give you hint.';
+				$scope.llDesc = 'This will give you hint. 5 points will be reduced from current score.';
 			else
-				$scope.llDesc = 'This will give you link of page. You will find answer on that link.';
+				$scope.llDesc = 'This will give you link of page. 5 points will be from current score.';
 		}
 		$scope.useLifeline = function(){
 			$scope.loading = true;
@@ -38,6 +38,7 @@ angular.module('quiz', [])
 						{
 							$scope.llLink = data.link;
 						}
+						$scope.lbUpdate();
 					}
 					else if(data.status=="fail")
 					{
