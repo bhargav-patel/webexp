@@ -11,6 +11,7 @@ class Profile(models.Model):
 	lifeline1 = models.BooleanField(default=False)
 	lifeline2 = models.BooleanField(default=False)
 	lifeline3 = models.BooleanField(default=False)
+	level_up_time = models.DateTimeField()
 	
 	def __str__(self):
 		return self.user.username+" "+str(self.level)

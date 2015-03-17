@@ -72,7 +72,7 @@
 								<h4 class="modal-title">Level {$ que.level $} Image</h4>
 							</div>
 							<div class="modal-body">
-								<img ng-src="{$que.image$}" class="img-responsive" src="{% static 'img/1.jpg'%}" />
+								<img ng-src="{$que.image  || '//:0'$}" class="img-responsive" />
 							</div>
 						</div>
 					</div>
@@ -125,8 +125,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="r in lbData">
-							<td>{$ $index + 1$}</td>
+						<tr ng-repeat="(k,r) in lbData" ng-class="{'success text-warning':$last}">
+							<td><span ng-if="!$last">{$ $index + 1$}</span></td>
 							<td>{$ r.u $}</td>
 							<td>{$ r.l $}</td>
 							<td>{$ r.p $}</td>

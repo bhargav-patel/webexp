@@ -8,6 +8,7 @@ from quiz.models import Question
 from django.http import HttpResponse,Http404
 import json
 from authentication.models import Profile
+from datetime import datetime
 
 # Create your views here.
 
@@ -58,6 +59,7 @@ def checkanswer(request):
 			if json_data.get('answer')==q.answer:
 				profile.level = profile.level + 1
 				profile.points = profile.points + q.points
+				profile.level_up_time = datetime.now()
 				profile.save()
 				temp['status']='true'
 			else:
@@ -105,7 +107,7 @@ def uselifeline(request):
 	
 def gettop(request):
 	if request.user.is_authenticated():
-		top = Profile.objects.order_by('-points')[:10]
+		top = Profile.objects.order_by('-points','-level','level_up_time')[:10]
 		temp=[]
 		for t in top:
 			temp.append({"u":t.user.username,"l":t.level,"p":t.points})
