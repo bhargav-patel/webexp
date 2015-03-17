@@ -107,5 +107,5 @@ QUIZ_TIME = datetime(2015,3,15,18,35,0,0)
 td = timedelta(hours=5,minutes=30)
 QUIZ_TIME = QUIZ_TIME - td;
 
-QUIZ_END_TIME = datetime(2015,3,16,19,58,0,0)
+QUIZ_END_TIME = datetime(2015,3,18,19,58,0,0)
 QUIZ_END_TIME = QUIZ_END_TIME - td;

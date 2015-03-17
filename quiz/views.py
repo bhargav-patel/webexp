@@ -38,6 +38,7 @@ def getquestion(request):
 			'level':q.level,
 			'question':q.question,
 			'image':q.image.url,
+			'points':q.points,
 		}
 		data = json.dumps(temp)
 		return HttpResponse(data,content_type='application/json')
