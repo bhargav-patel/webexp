@@ -27,16 +27,8 @@ def quiz(request):
 		td = settings.QUIZ_END_TIME - datetime.now()
 		return render(request,'quiz/quiz.html',{'tds':td.seconds,'format':'%H : %M : %S'})
 	else:
-		return render(request,'quiz/ended.html')
-		
-@login_required	
-def ended(request):
-	if settings.QUIZ_TIME > datetime.now():
-		return redirect(reverse('waiting'))
-	elif settings.QUIZ_END_TIME > datetime.now():
-		return redirect(reverse('quiz'))
-	else:
-		raise Http404
+		profile = Profile.objects.get(user=request.user)
+		return render(request,'quiz/ended.html',{'profile':profile})
 		
 def getquestion(request):
 	if request.user.is_authenticated():

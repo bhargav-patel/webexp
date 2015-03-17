@@ -1,4 +1,48 @@
 {% extends "base.html" %}
 {% block content %}
-Ended
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+		<div class="panel panel-success">
+			<div class="panel-heading  text-center">
+				<h1 class="mdi-action-done-all"></h1>
+				<h1>Thank you for Participation.</h1>
+				<p>Please logout before you leave computer.</p>
+			</div>
+			<div class="panel-body lead">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<table class="table table-striped table-hover ">
+							<tbody>
+								<tr>
+									<td>Name</td>
+									<td>{{profile.user.first_name}} {{profile.user.last_name}}</td>
+								</tr>
+								<tr>
+									<td>Username</td>
+									<td>{{profile.user.username}}</td>
+								</tr>
+								<tr>
+									<td>Level</td>
+									<td>{{profile.level}}</td>
+								</tr>
+								<tr>
+									<td>Score</td>
+									<td class="text-warning">{{profile.points}}</td>
+								</tr>
+								<tr>
+									<td>Lifelines used</td>
+									<td>
+										{% if profile.lifeline1 %}Skip<br />{% endif %}
+										{% if profile.lifeline2 %}Hint<br />{% endif %}
+										{% if profile.lifeline3 %}Link{% endif %}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock %}
