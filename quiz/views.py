@@ -31,6 +31,7 @@ def quiz(request):
 		profile = Profile.objects.get(user=request.user)
 		return render(request,'quiz/ended.html',{'profile':profile})
 		
+@login_required	
 def getquestion(request):
 	if request.user.is_authenticated():
 		profile = Profile.objects.get(user=request.user)
@@ -45,7 +46,8 @@ def getquestion(request):
 		data = json.dumps(temp)
 		return HttpResponse(data,content_type='application/json')
 	raise Http404
-		
+	
+@login_required		
 def checkanswer(request):
 	if request.method == 'POST' and request.user.is_authenticated():
 		temp = {
@@ -70,6 +72,7 @@ def checkanswer(request):
 		return HttpResponse(data,content_type='application/json')
 	raise Http404
 	
+@login_required	
 def uselifeline(request):
 	if request.method == 'POST' and request.user.is_authenticated():
 		temp = {
@@ -106,6 +109,7 @@ def uselifeline(request):
 		return HttpResponse(data,content_type='application/json')
 	raise Http404
 	
+@login_required	
 def gettop(request):
 	if request.user.is_authenticated():
 		top = Profile.objects.order_by('-points','-level','level_up_time')[:10]

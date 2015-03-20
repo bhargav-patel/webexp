@@ -14,7 +14,7 @@ class Profile(models.Model):
 	level_up_time = models.DateTimeField(null=True,blank=True)
 	
 	def __str__(self):
-		return self.user.username+" "+str(self.level)
+		return self.user.username+" < "+str(self.level)+" >  < "+str(self.points)+" >"
 		
 	def get_top_10(self):
 		return Profile.objects.order_by('points')[:10]
