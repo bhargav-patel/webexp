@@ -70,3 +70,5 @@ dist/
 staticfiles/
 
 static/img/que/
+
+migrations/
