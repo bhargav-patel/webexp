@@ -34,7 +34,7 @@ class UserForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
-		fields = ['mobile']
+		fields = ['mobile','college','enroll_no']
 		
 class LoginForm(forms.Form):
 	username = forms.CharField()

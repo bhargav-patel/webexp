@@ -32,9 +32,25 @@
 								<tr>
 									<td>Lifelines used</td>
 									<td>
-										{% if profile.lifeline1 %}Skip<br />{% endif %}
-										{% if profile.lifeline2 %}Hint<br />{% endif %}
-										{% if profile.lifeline3 %}Link{% endif %}
+										{% if profile.lifeline1 or profile.lifeline2 or profile.lifeline2 %}
+											{% if profile.lifeline1 %}Skip<br />{% endif %}
+											{% if profile.lifeline2 %}Hint<br />{% endif %}
+											{% if profile.lifeline3 %}Link{% endif %}
+										{% else %}
+											Not Used
+										{% endif %}
+									</td>
+								</tr>
+								<tr>
+									<td>College</td>
+									<td>
+										{{profile.college}}
+									</td>
+								</tr>
+								<tr>
+									<td>Enrollment Number</td>
+									<td>
+										{{profile.enroll_no}}
 									</td>
 								</tr>
 							</tbody>

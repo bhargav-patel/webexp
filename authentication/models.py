@@ -5,13 +5,15 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
 	user = models.OneToOneField(User)
-	mobile = models.CharField(max_length=10)
+	mobile = models.CharField(max_length=15)
 	level = models.IntegerField(default=1)
 	points = models.IntegerField(default=0)
 	lifeline1 = models.BooleanField(default=False)
 	lifeline2 = models.BooleanField(default=False)
 	lifeline3 = models.BooleanField(default=False)
 	level_up_time = models.DateTimeField(null=True,blank=True)
+	college = models.CharField(max_length=50)
+	enroll_no = models.CharField(max_length=12)
 	
 	def __str__(self):
 		return self.user.username+" < "+str(self.level)+" >  < "+str(self.points)+" >"
