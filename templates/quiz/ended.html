@@ -19,19 +19,19 @@
 								</tr>
 								<tr>
 									<td>Level</td>
-									<td>{{profile.level}}</td>
+									<td>{{qs.level}}</td>
 								</tr>
 								<tr>
 									<td>Score</td>
-									<td class="text-warning">{{profile.points}}</td>
+									<td class="text-warning">{{qs.points}}</td>
 								</tr>
 								<tr>
 									<td>Lifelines used</td>
 									<td>
-										{% if profile.lifeline1 or profile.lifeline2 or profile.lifeline2 %}
-											{% if profile.lifeline1 %}Skip<br />{% endif %}
-											{% if profile.lifeline2 %}Hint<br />{% endif %}
-											{% if profile.lifeline3 %}Link{% endif %}
+										{% if qs.lifeline1 or qs.lifeline2 or qs.lifeline2 %}
+											{% if qs.lifeline1 %}Skip<br />{% endif %}
+											{% if qs.lifeline2 %}Hint<br />{% endif %}
+											{% if qs.lifeline3 %}Link{% endif %}
 										{% else %}
 											Not Used
 										{% endif %}

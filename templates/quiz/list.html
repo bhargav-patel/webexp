@@ -34,6 +34,21 @@
 				</div>
 			</div>
 		{% endfor %}
+		{% for quiz in qc%}
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-md-6 col-md-offset-2">
+							<h1>{{quiz.name}}</h1>
+							Quiz Completed.
+						</div>
+						<div class="col-md-3 col-md-offset-1">
+							<br /><a href="{% url 'quiz' quiz.id %}" class="btn btn-success btn-raised">Go</a>
+						</div>					
+					</div>
+				</div>
+			</div>
+		{% endfor %}
 	</div>
 </div>
 {% endblock %}

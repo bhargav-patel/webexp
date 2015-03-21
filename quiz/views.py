@@ -35,7 +35,11 @@ def quiz(request,quiz_id="-1"):
 		return render(request,'quiz/quiz.html',{'tds':td.seconds,'format':'%H : %M : %S','quiz_id':quiz_id})
 	else:
 		profile = Profile.objects.get(user=request.user)
-		return render(request,'quiz/ended.html',{'profile':profile,'quiz_id':quiz_id})
+		try:
+			qs = QuizStats.objects.get( Q(user=request.user) & Q(quiz__id=quiz_id) )
+		except QuizStats.DoesNotExist:
+			qs = QuizStats.objects.create(user=request.user,quiz=q)
+		return render(request,'quiz/ended.html',{'profile':profile,'quiz_id':quiz_id,'qs':qs})
 		
 @login_required	
 def getquestion(request,quiz_id="-1"):
@@ -139,4 +143,5 @@ def gettop(request,quiz_id="-1"):
 def quiz_list(request):
 	q = Quiz.objects.filter(start_time__gte=datetime.now()).order_by('start_time')
 	qs = Quiz.objects.filter( Q(start_time__lte=datetime.now()) & Q(end_time__gte=datetime.now()) ).order_by('start_time')
-	return render(request,'quiz/list.html',{'q':q,'qs':qs})
+	qc = Quiz.objects.filter( Q(start_time__lte=datetime.now()) & Q(end_time__lte=datetime.now()) ).order_by('start_time')
+	return render(request,'quiz/list.html',{'q':q,'qs':qs,'qc':qc})
