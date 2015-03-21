@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		{% for quiz in qs%}
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-md-6 col-md-offset-2">
+							<h1>{{quiz.name}}</h1>
+							Already Started.<br />
+							End on <span class="rem_time">{{quiz.end_time|date:"c"}}</span>
+						</div>
+						<div class="col-md-3 col-md-offset-1">
+							<br /><a href="{% url 'quiz' quiz.id %}" class="btn btn-success btn-raised">Go</a>
+						</div>					
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+		{% for quiz in q%}
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-md-6 col-md-offset-2">
+							<h1>{{quiz.name}}</h1>
+							From&nbsp;&nbsp; <span class="rem_time">{{quiz.start_time|date:"c"}}</span><br />
+							To&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="rem_time">{{quiz.start_time|date:"c"}}</span>
+						</div>
+						<div class="col-md-3 col-md-offset-1">
+							<br /><a href="{% url 'quiz' quiz.id %}" class="btn btn-success btn-raised">Go</a>
+						</div>					
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}
+{% load static %}
+{% block js%}
+<script src="{% static 'js/date.min.js' %}"></script>
+<script>
+$(document).ready(function(){
+	$('.rem_time').each(function(){
+		d = new Date($(this).html());
+		$(this).html(d.toString('d MMMM yyyy')+" At "+d.toString('h:mm tt'));
+	});
+});
+</script>
+{%endblock%}

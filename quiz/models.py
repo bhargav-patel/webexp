@@ -1,24 +1,45 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
-
-class Question(models.Model):
-	question = models.CharField(max_length=300,blank=False,null=False)
-	image = models.ImageField(upload_to="static/img/que/",blank = True)
-	answer = models.CharField(max_length=20,blank=False,null=False)
-	level = models.IntegerField(unique=True)
-	options = models.CharField(max_length=50,blank=False,null=False)
-	hint = models.CharField(max_length=50,blank=False,null=False)
-	link = models.URLField(blank=False,null=False)
-	points = models.IntegerField()
-	
-	def __str__(self):
-		return str(self.level)+" "+ self.answer
 		
-class QuizTime(models.Model):
+class Quiz(models.Model):
 	start_time = models.DateTimeField()
 	end_time = models.DateTimeField()
 	name = models.CharField(max_length=50,default='Quiz')
 	
 	def __str__(self):
-		return str(self.start_time)+" "+str(self.end_time)
+		return str(self.id)+" -- >"+str(self.start_time)+" "+str(self.end_time)
+
+class Question(models.Model):
+	quiz = models.ForeignKey(Quiz)
+	question = models.CharField(max_length=300,blank=False,null=False)
+	image = models.ImageField(upload_to="static/img/que/",blank = True)
+	answer = models.CharField(max_length=20,blank=False,null=False)
+	level = models.IntegerField()
+	options = models.CharField(max_length=50,blank=False,null=False)
+	hint = models.CharField(max_length=50,blank=False,null=False)
+	link = models.URLField(blank=False,null=False)
+	points = models.IntegerField()
+	
+	class Meta:
+		unique_together = (("quiz", "level"),)
+	
+	def __str__(self):
+		return str(self.quiz.id)+" "+str(self.level)+" "+ self.answer
+		
+class QuizStats(models.Model):
+	user = models.ForeignKey(User)
+	quiz = models.ForeignKey(Quiz)
+	level = models.IntegerField(default=1)
+	points = models.IntegerField(default=0)
+	lifeline1 = models.BooleanField(default=False)
+	lifeline2 = models.BooleanField(default=False)
+	lifeline3 = models.BooleanField(default=False)
+	level_up_time = models.DateTimeField(null=True,blank=True)
+	
+	class Meta:
+		unique_together = (("user", "quiz"),)
+		
+	def __str__(self):
+		return str(self.user.username)+" "+str(self.level)+" "+ str(self.points)

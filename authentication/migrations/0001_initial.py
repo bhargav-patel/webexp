@@ -16,11 +16,10 @@ class Migration(migrations.Migration):
             name='Profile',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('mobile', models.CharField(max_length=10)),
-                ('level', models.IntegerField(default=0)),
-                ('lifeline1', models.BooleanField(default=False)),
-                ('lifeline2', models.BooleanField(default=False)),
-                ('lifeline3', models.BooleanField(default=False)),
+                ('mobile', models.CharField(max_length=15)),
+                ('level', models.IntegerField(default=1)),
+                ('college', models.CharField(max_length=50)),
+                ('enroll_no', models.CharField(max_length=12)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
             options={

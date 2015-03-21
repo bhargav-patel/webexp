@@ -28,7 +28,7 @@ $("#countdown").countdown(ds,function(event) {
 	$(this).text(
 		event.strftime('{{format}}')
 	).on('finish.countdown', function(){
-		location.href = '{% url 'quiz'%}';
+		location.href = "{% url 'quiz' quiz_id %}";
 	});
 });
 </script>

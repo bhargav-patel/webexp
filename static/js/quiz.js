@@ -1,5 +1,9 @@
 angular.module('quiz', [])
 	.controller('mainController', ['$scope','$http', function($scope,$http) {
+		$scope.init = function(qid){
+			$scope.quiz_id=qid;
+			$scope.getQuestion();
+		}
 		var options =  {
 			content: 'initial',
 			style: "snackbar",
@@ -21,7 +25,7 @@ angular.module('quiz', [])
 		}
 		$scope.useLifeline = function(){
 			$scope.loading = true;
-			$http.post('/quiz/uselifeline',{"level":$scope.que.level,"type":$scope.llType})
+			$http.post('/quiz/'+$scope.quiz_id+'/uselifeline',{"level":$scope.que.level,"type":$scope.llType})
 				.success(function(data){
 					if(data.status=="success")
 					{
@@ -53,7 +57,7 @@ angular.module('quiz', [])
 		}
 		$scope.getQuestion = function(){
 			$scope.loading = true;
-			$http.post('/quiz/getquestion')
+			$http.post('/quiz/'+$scope.quiz_id+'/getquestion')
 				.success(function(data){
 					$scope.que = data;
 					$scope.llHint="";
@@ -64,7 +68,7 @@ angular.module('quiz', [])
 		}
 		$scope.checkAnswer = function(){
 			$scope.loading = true;
-			$http.post('/quiz/checkanswer',{"level":$scope.que.level,"answer":$scope.answer})
+			$http.post('/quiz/'+$scope.quiz_id+'/checkanswer',{"level":$scope.que.level,"answer":$scope.answer})
 				.success(function(data){
 					if(data.status=="true")
 					{
@@ -85,7 +89,7 @@ angular.module('quiz', [])
 		}
 		$scope.lbUpdate = function(){
 			$scope.loading = true;
-			$http.post('/quiz/gettop')
+			$http.post('/quiz/'+$scope.quiz_id+'/gettop')
 				.success(function(data){
 					$scope.lbData = data;
 					$scope.loading = false;

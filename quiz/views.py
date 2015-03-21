@@ -4,38 +4,48 @@ from datetime import datetime
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.core import serializers
-from quiz.models import Question
+from quiz.models import Question,Quiz,QuizStats
 from django.http import HttpResponse,Http404
 import json
 from authentication.models import Profile
-from datetime import datetime
+from django.db.models import Q
+from django.utils import timezone
 
 # Create your views here.
 
 @login_required
-def waiting(request):
-	if settings.QUIZ_TIME > datetime.now():
-		td = settings.QUIZ_TIME - datetime.now()
-		return render(request,'quiz/waiting.html',{'tds':td.seconds,'format':'%H : %M : %S'})
+def waiting(request,quiz_id="-1"):
+	q = Quiz.objects.get(id=quiz_id)
+	QUIZ_TIME = q.start_time
+	if QUIZ_TIME > timezone.now():
+		td = QUIZ_TIME - timezone.now()
+		return render(request,'quiz/waiting.html',{'tds':td.seconds,'format':'%H : %M : %S','quiz_id':quiz_id})
 	else:
-		return redirect(reverse('quiz'))
+		return redirect(reverse('quiz',kwargs={'quiz_id':quiz_id}))
 		
 @login_required	
-def quiz(request):
-	if settings.QUIZ_TIME > datetime.now():
-		return redirect(reverse('waiting'))
-	elif settings.QUIZ_END_TIME > datetime.now():
-		td = settings.QUIZ_END_TIME - datetime.now()
-		return render(request,'quiz/quiz.html',{'tds':td.seconds,'format':'%H : %M : %S'})
+def quiz(request,quiz_id="-1"):
+	q = Quiz.objects.get(id=quiz_id)
+	QUIZ_TIME = q.start_time
+	QUIZ_END_TIME = q.end_time
+	if QUIZ_TIME > timezone.now():
+		return redirect(reverse('waiting',kwargs={'quiz_id':quiz_id}))
+	elif QUIZ_END_TIME > timezone.now():
+		td = QUIZ_END_TIME - timezone.now()
+		return render(request,'quiz/quiz.html',{'tds':td.seconds,'format':'%H : %M : %S','quiz_id':quiz_id})
 	else:
 		profile = Profile.objects.get(user=request.user)
-		return render(request,'quiz/ended.html',{'profile':profile})
+		return render(request,'quiz/ended.html',{'profile':profile,'quiz_id':quiz_id})
 		
 @login_required	
-def getquestion(request):
+def getquestion(request,quiz_id="-1"):
 	if request.user.is_authenticated():
-		profile = Profile.objects.get(user=request.user)
-		q = Question.objects.get(level=profile.level)
+		q = Quiz.objects.get(id=quiz_id)
+		try:
+			qs = QuizStats.objects.get( Q(user=request.user) & Q(quiz__id=quiz_id) )
+		except QuizStats.DoesNotExist:
+			qs = QuizStats.objects.create(user=request.user,quiz=q)
+		q = Question.objects.get( Q(quiz__id=quiz_id) & Q(level=qs.level) )
 		temp = {
 			'level':q.level,
 			'question':q.question,
@@ -48,22 +58,22 @@ def getquestion(request):
 	raise Http404
 	
 @login_required		
-def checkanswer(request):
+def checkanswer(request,quiz_id="-1"):
 	if request.method == 'POST' and request.user.is_authenticated():
 		temp = {
 			'status':'error'
 		}
 		json_data = json.loads(request.body)
 		
-		profile = Profile.objects.get(user=request.user)
+		qs = QuizStats.objects.get( Q(user=request.user) & Q(quiz__id=quiz_id) )
 		
-		if json_data.get('level')==profile.level:
-			q = Question.objects.get(level=profile.level)
+		if json_data.get('level')==qs.level:
+			q = Question.objects.get( Q(quiz__id=quiz_id) & Q(level=qs.level) )
 			if json_data.get('answer')==q.answer:
-				profile.level = profile.level + 1
-				profile.points = profile.points + q.points
-				profile.level_up_time = datetime.now()
-				profile.save()
+				qs.level = qs.level + 1
+				qs.points = qs.points + q.points
+				qs.level_up_time = datetime.now()
+				qs.save()
 				temp['status']='true'
 			else:
 				temp['status']='false'
@@ -73,7 +83,7 @@ def checkanswer(request):
 	raise Http404
 	
 @login_required	
-def uselifeline(request):
+def uselifeline(request,quiz_id="-1"):
 	if request.method == 'POST' and request.user.is_authenticated():
 		temp = {
 			'status':'error'
@@ -83,24 +93,24 @@ def uselifeline(request):
 		level = json_data.get('level')
 		temp['type']=type
 		
-		profile = Profile.objects.get(user=request.user)
+		qs = QuizStats.objects.get( Q(user=request.user) & Q(quiz__id=quiz_id) )
 		
-		if type==1 and profile.lifeline1==False:
-			profile.lifeline1=True
-			profile.level = profile.level + 1;
-			profile.save()
+		if type==1 and qs.lifeline1==False:
+			qs.lifeline1=True
+			qs.level = qs.level + 1;
+			qs.save()
 			temp['status']='success'
-		elif type==2 and profile.lifeline2==False:
-			profile.lifeline2=True
-			profile.points = profile.points-5
-			profile.save()
-			temp['hint']=Question.objects.get(level=level).hint
+		elif type==2 and qs.lifeline2==False:
+			qs.lifeline2=True
+			qs.points = qs.points-5
+			qs.save()
+			temp['hint'] = Question.objects.get( Q(quiz__id=quiz_id) & Q(level=qs.level) ).hint
 			temp['status']='success'
-		elif type==3 and profile.lifeline3==False:
-			profile.lifeline3=True
-			profile.points = profile.points-5
-			profile.save()
-			temp['link']=Question.objects.get(level=level).link
+		elif type==3 and qs.lifeline3==False:
+			qs.lifeline3=True
+			qs.points = qs.points-5
+			qs.save()
+			temp['link'] = Question.objects.get( Q(quiz__id=quiz_id) & Q(level=qs.level) ).link
 			temp['status']='success'
 		else:
 			temp['status']='fail'
@@ -110,15 +120,23 @@ def uselifeline(request):
 	raise Http404
 	
 @login_required	
-def gettop(request):
+def gettop(request,quiz_id="-1"):
 	if request.user.is_authenticated():
-		top = Profile.objects.order_by('-points','-level','level_up_time')[:10]
+		top = QuizStats.objects.filter(quiz__id=quiz_id).order_by('-points','-level','level_up_time')[:10]
+		
 		temp=[]
 		for t in top:
 			temp.append({"u":t.user.username,"l":t.level,"p":t.points})
-		t = Profile.objects.get(user=request.user)
+			
+		t = QuizStats.objects.get( Q(user=request.user) & Q(quiz__id=quiz_id) )
 		temp.append({"u":t.user.username,"l":t.level,"p":t.points})
 		
 		data = json.dumps(temp)
 		return HttpResponse(data,content_type='application/json')
 	raise Http404
+	
+@login_required
+def quiz_list(request):
+	q = Quiz.objects.filter(start_time__gte=datetime.now()).order_by('start_time')
+	qs = Quiz.objects.filter( Q(start_time__lte=datetime.now()) & Q(end_time__gte=datetime.now()) ).order_by('start_time')
+	return render(request,'quiz/list.html',{'q':q,'qs':qs})

@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{% static 'css/snackbar.min.css'%}">
 {% endblock %}
 {% block content %}
-<div class="row" ng-app="quiz" ng-controller="mainController" ng-init="getQuestion()">
+<div class="row" ng-app="quiz" ng-controller="mainController" ng-init="init({{quiz_id}})">
 	<div class="col-md-2">
 		<div class="panel panel-primary">
 			<div class="panel-heading text-center">
@@ -38,7 +38,7 @@
 				
 				<br />
 				<div class="row">
-					<img ng-src="{$que.image$}" class="col-md-4 img-responsive" data-toggle="modal" data-target="#fullImage" />
+					<img ng-src="/{$que.image$}" class="col-md-4 img-responsive" data-toggle="modal" data-target="#fullImage" />
 					<div class="col-md-8">
 						<p class="lead" ng-bind="que.question">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.?????Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.?????</p>
 						<a ng-show="llHint" class="btn btn-info btn-xs" data-toggle="modal" data-target="#hint">Hint</a>
@@ -72,7 +72,7 @@
 								<h4 class="modal-title">Level {$ que.level $} Image</h4>
 							</div>
 							<div class="modal-body">
-								<img ng-src="{$que.image  || '//:0'$}" class="img-responsive" />
+								<img ng-src="/{$que.image$}" class="img-responsive" />
 							</div>
 						</div>
 					</div>
