@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from quiz.models import QuizTime
 
 # Create your models here.
 
@@ -14,6 +15,7 @@ class Profile(models.Model):
 	level_up_time = models.DateTimeField(null=True,blank=True)
 	college = models.CharField(max_length=50)
 	enroll_no = models.CharField(max_length=12)
+	quiz = models.ForeignKey(QuizTime,null=True,blank=True)
 	
 	def __str__(self):
 		return self.user.username+" < "+str(self.level)+" >  < "+str(self.points)+" >"
