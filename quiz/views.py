@@ -51,6 +51,7 @@ def getquestion(request,quiz_id="-1"):
 			qs = QuizStats.objects.create(user=request.user,quiz=q)
 		q = Question.objects.get( Q(quiz__id=quiz_id) & Q(level=qs.level) )
 		temp = {
+			'quiz_name':qs.quiz.name,
 			'level':q.level,
 			'question':q.question,
 			'points':q.points,
@@ -145,3 +146,30 @@ def quiz_list(request):
 	qs = Quiz.objects.filter( Q(start_time__lte=datetime.now()) & Q(end_time__gte=datetime.now()) ).order_by('start_time')
 	qc = Quiz.objects.filter( Q(start_time__lte=datetime.now()) & Q(end_time__lte=datetime.now()) ).order_by('start_time')
 	return render(request,'quiz/list.html',{'q':q,'qs':qs,'qc':qc})
+	
+def leaderboard(request,quiz_id):
+	if request.method=='POST':
+		users = QuizStats.objects.filter(quiz__id=quiz_id)
+		temp = []
+		for u in users:
+			lut = None
+			if u.level_up_time:
+				lut = u.level_up_time.isoformat()
+			temp.append({	"u":u.user.username,
+							"n":u.user.first_name+" "+u.user.last_name,
+							"l":u.level,
+							"p":u.points,
+							"c":u.user.profile.college,
+							"en":u.user.profile.enroll_no,
+							"m":u.user.profile.mobile,
+							"em":u.user.email,
+							"l1":u.lifeline1,
+							"l2":u.lifeline2,
+							"l3":u.lifeline3,
+							"lut":lut
+						})
+		data = json.dumps(temp)
+		return HttpResponse(data,content_type='application/json')
+	else:
+		q = Quiz.objects.get(id=quiz_id)
+		return render(request,'quiz/leaderboard.html',{'q':q,'quiz_id':quiz_id})

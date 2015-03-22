@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+
+{% block css %}
+<style>
+.pointer{
+	cursor:pointer;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="panel panel-primary" ng-app="leaderboard" ng-controller="lbController" ng-init="init({{quiz_id}})">
+    <div class="panel-heading">
+		<div class="row">
+			<div class="col-md-10">
+				<h3>{{q.name}} LeaderBoard</h3>
+			</div>
+			<div class="col-md-2">
+				<a class="btn btn-info btn-xs" data-toggle="modal" data-target="#filter">Filters</a>
+			</div>
+		</div>
+    </div>
+    <div class="panel-body">
+		<div class="modal fade" id="filter">
+			<div class="modal-dialog btn-raised">
+				<div class="panel panel-success">
+					<div class="panel-heading text-center">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h3>Filters</h3>
+					</div>
+					<div class="panel-body">
+						<div class="togglebutton row">
+							<label class="col-md-8 col-md-offset-2 row">
+								<div class="col-xs-8">Username</div>
+								<input class="col-xs-2" type="checkbox" ng-model="filter.u">
+							</label>
+						</div>
+						<div class="togglebutton row">
+							<label class="col-md-8 col-md-offset-2 row">
+								<div class="col-xs-8">Name</div>
+								<input class="col-xs-2" type="checkbox" ng-model="filter.n">
+							</label>
+						</div>
+						<div class="togglebutton row">
+							<label class="col-md-8 col-md-offset-2 row">
+								<div class="col-xs-8">College</div>
+								<input class="col-xs-2" type="checkbox" ng-model="filter.c">
+							</label>
+						</div>
+						<div class="togglebutton row">
+							<label class="col-md-8 col-md-offset-2 row">
+								<div class="col-xs-8">Enrollment Number</div>
+								<input class="col-xs-2" type="checkbox" ng-model="filter.en">
+							</label>
+						</div>
+						<div class="togglebutton row">
+							<label class="col-md-8 col-md-offset-2 row">
+								<div class="col-xs-8">Email</div>
+								<input class="col-xs-2" type="checkbox" ng-model="filter.em">
+							</label>
+						</div>
+						<div class="togglebutton row">
+							<label class="col-md-8 col-md-offset-2 row">
+								<div class="col-xs-8">Mobile</div>
+								<input class="col-xs-2" type="checkbox" ng-model="filter.m">
+							</label>
+						</div>
+						<div class="togglebutton row">
+							<label class="col-md-8 col-md-offset-2 row">
+								<div class="col-xs-8">Level</div>
+								<input class="col-xs-2" type="checkbox" ng-model="filter.l">
+							</label>
+						</div>
+						<div class="togglebutton row">
+							<label class="col-md-8 col-md-offset-2 row">
+								<div class="col-xs-8">Points</div>
+								<input class="col-xs-2" type="checkbox" ng-model="filter.p">
+							</label>
+						</div>
+						<div class="togglebutton row">
+							<label class="col-md-8 col-md-offset-2 row">
+								<div class="col-xs-8">Level Up Time</div>
+								<input class="col-xs-2" type="checkbox" ng-model="filter.lut">
+							</label>
+						</div>
+						<div class="togglebutton row">
+							<label class="col-md-8 col-md-offset-2 row">
+								<div class="col-xs-8">Skip</div>
+								<input class="col-xs-2" type="checkbox" ng-model="filter.l1">
+							</label>
+						</div>
+						<div class="togglebutton row">
+							<label class="col-md-8 col-md-offset-2 row">
+								<div class="col-xs-8">Hint</div>
+								<input class="col-xs-2" type="checkbox" ng-model="filter.l2">
+							</label>
+						</div>
+						<div class="togglebutton row">
+							<label class="col-md-8 col-md-offset-2 row">
+								<div class="col-xs-8">Link</div>
+								<input class="col-xs-2" type="checkbox" ng-model="filter.l3">
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<table class="table table-striped table-hover ">
+			<thead>
+				<tr>
+					<th class="pointer" ng-show="filter.u" ng-click="sort('u')">Username</th>
+					<th class="pointer" ng-show="filter.n" ng-click="sort('n')">Name</th>
+					<th class="pointer" ng-show="filter.c" ng-click="sort('c')">College</th>
+					<th class="pointer" ng-show="filter.en" ng-click="sort('en')">EnrollNo</th>
+					<th class="pointer" ng-show="filter.em" ng-click="sort('em')">Email</th>
+					<th class="pointer" ng-show="filter.m" ng-click="sort('m')">Mobile</th>
+					<th class="pointer" ng-show="filter.l" ng-click="sort('l')">Level</th>
+					<th class="pointer" ng-show="filter.p" ng-click="sort('p')">Points</th>
+					<th class="pointer" ng-show="filter.lut" ng-click="sort('lut')">LevelUpTime</th>
+					<th class="pointer" ng-show="filter.l1" ng-click="sort('l1')">Skip</th>
+					<th class="pointer" ng-show="filter.l2" ng-click="sort('l2')">Hint</th>
+					<th class="pointer" ng-show="filter.l3" ng-click="sort('l3')">Link</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="u in data | orderBy:sortConf">
+					<td ng-show="filter.u">{$ u.u $}</td>
+					<td ng-show="filter.n">{$ u.n $}</td>
+					<td ng-show="filter.c">{$ u.c $}</td>
+					<td ng-show="filter.en">{$ u.en $}</td>
+					<td ng-show="filter.em">{$ u.em $}</td>
+					<td ng-show="filter.m">{$ u.m $}</td>
+					<td ng-show="filter.l">{$ u.l $}</td>
+					<td ng-show="filter.p">{$ u.p $}</td>
+					<td ng-show="filter.lut">{$ u.lut $}</td>
+					<td ng-show="filter.l1">
+						<i class="mdi-action-done" ng-if="u.l1"></i>
+						<i class="mdi-navigation-close" ng-if="!u.l1"></i>						
+					</td>
+					<td ng-show="filter.l2">
+						<i class="mdi-action-done" ng-if="u.l2"></i>
+						<i class="mdi-navigation-close" ng-if="!u.l2"></i>						
+					</td>
+					<td ng-show="filter.l3">
+						<i class="mdi-action-done" ng-if="u.l3"></i>
+						<i class="mdi-navigation-close" ng-if="!u.l3"></i>						
+					</td>					
+				</tr>
+			</tbody>
+		</table>
+    </div>
+</div>
+{% endblock %}
+{% load static %}
+{% block js %}
+	<script src="{% static 'bower_components/angular/angular.min.js' %}"></script>
+	<script>
+		angular.module('leaderboard', [])
+			.controller('lbController', ['$scope','$http', function($scope,$http) {
+				$scope.init = function(qid){
+					$scope.quiz_id=qid;
+					$scope.getList();
+					$scope.filter = {
+						u:true,
+						n:true,
+						l:true,
+						p:true,
+						l1:true,
+						l2:true,
+						l3:true,
+					}
+				}
+				$scope.sortConf = [
+					'-p',
+					'-l',
+					'lut'
+				]
+				$scope.sort = function(field){
+					var index = $scope.sortConf.indexOf(field);
+					if(index==-1){
+						index = $scope.sortConf.indexOf("-"+field);
+					}
+					if(index==0){
+						if($scope.sortConf[0] == field){
+							$scope.sortConf[0] = "-"+field;
+						}
+						else{
+							$scope.sortConf[0] = field;
+						}
+					}
+					else{
+						if(index>0){
+							$scope.sortConf.splice(index, 1);
+						}
+						$scope.sortConf.unshift(field);
+					}
+					console.log($scope.sortConf);
+				}
+				$scope.getList = function(){
+					$http.post('/quiz/'+$scope.quiz_id+'/leaderboard')
+						.success(function(data){
+							$scope.data = data;
+							console.log(data);
+						});
+				}
+			}]).run(run)
+			.config(function($interpolateProvider) {
+				$interpolateProvider.startSymbol('{$');
+				$interpolateProvider.endSymbol('$}');
+			});;
+			
+			run.$inject = ['$http'];
+		  
+			function run($http) {
+			  $http.defaults.xsrfHeaderName = 'X-CSRFToken';
+			  $http.defaults.xsrfCookieName = 'csrftoken';
+			};
+	</script>
+{% endblock %}

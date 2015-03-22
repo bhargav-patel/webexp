@@ -8,4 +8,5 @@ urlpatterns = patterns('',
 	url(r'(?P<quiz_id>\d+)/gettop$', 'quiz.views.gettop'),
 	url(r'list', 'quiz.views.quiz_list',name='quiz_list'),
 	url(r'(?P<quiz_id>\d+)/quiz$', 'quiz.views.quiz',name='quiz'),
+	url(r'(?P<quiz_id>\d+)/leaderboard$', 'quiz.views.leaderboard',name='leaderboard'),
 )

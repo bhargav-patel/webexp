@@ -14,7 +14,7 @@ class Quiz(models.Model):
 class Question(models.Model):
 	quiz = models.ForeignKey(Quiz)
 	question = models.CharField(max_length=300,blank=False,null=False)
-	image = models.ImageField(upload_to="static/img/que/",blank = True)
+	image = models.ImageField(upload_to="img/que/",blank = True)
 	answer = models.CharField(max_length=20,blank=False,null=False)
 	level = models.IntegerField()
 	options = models.CharField(max_length=50,blank=False,null=False)
@@ -42,4 +42,4 @@ class QuizStats(models.Model):
 		unique_together = (("user", "quiz"),)
 		
 	def __str__(self):
-		return str(self.user.username)+" "+str(self.level)+" "+ str(self.points)
+		return str(self.quiz.id)+" "+str(self.user.username)+" "+str(self.level)+" "+ str(self.points)
