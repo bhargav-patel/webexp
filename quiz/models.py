@@ -9,7 +9,7 @@ class Quiz(models.Model):
 	name = models.CharField(max_length=50,default='Quiz')
 	
 	def __str__(self):
-		return str(self.id)+" -- >"+str(self.start_time)+" "+str(self.end_time)
+		return self.name
 
 class Question(models.Model):
 	quiz = models.ForeignKey(Quiz)
@@ -26,7 +26,7 @@ class Question(models.Model):
 		unique_together = (("quiz", "level"),)
 	
 	def __str__(self):
-		return str(self.quiz.id)+" "+str(self.level)+" "+ self.answer
+		return self.question
 		
 class QuizStats(models.Model):
 	user = models.ForeignKey(User)
@@ -42,4 +42,4 @@ class QuizStats(models.Model):
 		unique_together = (("user", "quiz"),)
 		
 	def __str__(self):
-		return str(self.quiz.id)+" "+str(self.user.username)+" "+str(self.level)+" "+ str(self.points)
+		return str(self.quiz.name)+" of "+str(self.user.username)
