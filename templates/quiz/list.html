@@ -25,7 +25,7 @@
 						<div class="col-md-6 col-md-offset-2">
 							<h1>{{quiz.name}}</h1>
 							From&nbsp;&nbsp; <span class="rem_time">{{quiz.start_time|date:"c"}}</span><br />
-							To&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="rem_time">{{quiz.start_time|date:"c"}}</span>
+							To&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="rem_time">{{quiz.end_time|date:"c"}}</span>
 						</div>
 						<div class="col-md-3 col-md-offset-1">
 							<br /><a href="{% url 'quiz' quiz.id %}" class="btn btn-success btn-raised">Go</a>

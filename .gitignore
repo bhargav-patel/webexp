@@ -72,3 +72,5 @@ staticfiles/
 static/img/que/
 
 migrations/
+media/
+*.sql

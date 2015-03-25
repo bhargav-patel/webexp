@@ -10,6 +10,7 @@ import json
 from authentication.models import Profile
 from django.db.models import Q
 from django.utils import timezone
+import re
 
 # Create your views here.
 
@@ -68,13 +69,15 @@ def checkanswer(request,quiz_id="-1"):
 		temp = {
 			'status':'error'
 		}
-		json_data = json.loads(request.body)
+		json_data = json.loads(request.body.decode('utf-8'))
 		
 		qs = QuizStats.objects.get( Q(user=request.user) & Q(quiz__id=quiz_id) )
 		
 		if json_data.get('level')==qs.level:
 			q = Question.objects.get( Q(quiz__id=quiz_id) & Q(level=qs.level) )
-			if json_data.get('answer')==q.answer:
+			check_ans = ''.join(re.split("\s|,|'|-|\.",json_data.get('answer'))).lower()
+			correct_ans = ''.join(re.split("\s|,|'|-|\.",q.answer)).lower()
+			if check_ans==correct_ans:
 				qs.level = qs.level + 1
 				qs.points = qs.points + q.points
 				qs.level_up_time = datetime.now()
@@ -93,7 +96,7 @@ def uselifeline(request,quiz_id="-1"):
 		temp = {
 			'status':'error'
 		}
-		json_data = json.loads(request.body)
+		json_data = json.loads(request.body.decode('utf-8'))
 		type = json_data.get('type')
 		level = json_data.get('level')
 		temp['type']=type
@@ -132,10 +135,13 @@ def gettop(request,quiz_id="-1"):
 		temp=[]
 		for t in top:
 			temp.append({"u":t.user.username,"l":t.level,"p":t.points})
-			
-		t = QuizStats.objects.get( Q(user=request.user) & Q(quiz__id=quiz_id) )
-		temp.append({"u":t.user.username,"l":t.level,"p":t.points})
 		
+		try:
+			t = QuizStats.objects.get( Q(user=request.user) & Q(quiz__id=quiz_id) )
+			temp.append({"u":t.user.username,"l":t.level,"p":t.points})
+		except QuizStats.DoesNotExist:
+			pass
+			
 		data = json.dumps(temp)
 		return HttpResponse(data,content_type='application/json')
 	raise Http404

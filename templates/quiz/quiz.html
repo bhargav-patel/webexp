@@ -45,9 +45,9 @@
 				
 				<br />
 				<div class="row">
-					<img ng-src="{$que.image$}" class="col-md-4 img-responsive" data-toggle="modal" data-target="#fullImage" />
+					<img ng-src="{$que.image || '/static/img/noimg.png'$}" class="col-md-4 img-responsive" data-toggle="modal" data-target="#fullImage" />
 					<div class="col-md-8">
-						<p class="lead" ng-bind="que.question">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.?????Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.?????</p>
+						<p class="lead" ng-bind="que.question">Loading..</p>
 						<a ng-show="llHint" class="btn btn-info btn-xs" data-toggle="modal" data-target="#hint">Hint</a>
 						<a ng-show="llLink" class="btn btn-warning btn-xs" href="{$llLink$}" target="_blank">Link</a>
 					</div>
@@ -79,7 +79,7 @@
 								<h4 class="modal-title">Level {$ que.level $} Image</h4>
 							</div>
 							<div class="modal-body">
-								<img ng-src="{$que.image$}" class="img-responsive" />
+								<img ng-src="{$que.image || '/static/img/noimg.png'$}" class="img-responsive" />
 							</div>
 						</div>
 					</div>
