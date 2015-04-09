@@ -2,9 +2,9 @@
 Online quiz.
 
 Used:
-for back-end django with mysql database
-for front-end angular js and jquery
-for ui bootstrap material design
+for back-end django with mysql database<br />
+for front-end angular js and jquery<br />
+for ui bootstrap material design<br />
 
 
 This application was created for college techfest event. It is quiz but you can see next question only if you solve current.
