@@ -11,4 +11,4 @@ This application was created for college techfest event. It is quiz but you can 
 It also provides three lifelines which you can use only once. You can setup multiple quizs. live leaderboard is also supported.
 You can get flexibilty in event handling with django admin panel.
 
-I hvae also deployed on bhargav.pythonanywhere.com
+I have also deployed on bhargav.pythonanywhere.com
